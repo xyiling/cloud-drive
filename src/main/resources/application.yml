@@ -11,9 +11,9 @@ spring:
     name: cloudDrive
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://121.37.8.197:3306/space?serverTimezone=GMT%2B8
+    url: jdbc:mysql://ip:host/space?serverTimezone=GMT%2B8
     username: root
-    password: zmpq1597389_+
+    password: 
   redis:
     host: 121.37.8.197
     port: 63739
