@@ -5,7 +5,9 @@ import com.xyl.entity.dto.response.UserResultDto;
 import com.xyl.entity.pojo.User;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface UserConverter {
     @Mappings({
             @Mapping(source = "dto.uid", target = "uid"),
