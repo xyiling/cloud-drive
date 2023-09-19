@@ -37,6 +37,6 @@ aliyun:
   oss:
     file:
       endpoint: oss-cn-guangzhou.aliyuncs.com
-      keyid: LTAI5tRh2goyir4HF6r1LWd6
-      keysecret: cNSMl6rlpFMI5OmCQP6QWwWGrF6vH8
+      keyid: 
+      keysecret: 
       bucketname: my-cloud-drive
