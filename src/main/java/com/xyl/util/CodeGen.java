@@ -38,8 +38,8 @@ public class CodeGen {
                             .entity("entity")
                             .service("service")
                             .serviceImpl("service.impl")
-                            .mapper("entity.dao")
-                            .xml("mapper");
+                            .mapper("entity.pojo")
+                            .xml("com/xyl/entity/dao");
                     //.pathInfo(Collections.singletonMap(OutputFile.xml, "D://")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
