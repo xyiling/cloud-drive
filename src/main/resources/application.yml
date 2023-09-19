@@ -3,11 +3,40 @@ mybatis:
   #指定Mybatis的实体目录
   type-aliases-package: com.xyl.entity.dao
 
-# Redis数据库索引（默认为0）
+
+server:
+  port: 8888
 spring:
+  application:
+    name: cloudDrive
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://121.37.8.197:3306/space?serverTimezone=GMT%2B8
+    username: root
+    password: zmpq1597389_+
   redis:
+    host: 121.37.8.197
+    port: 63739
     database: 0
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 1200
+    timeout: 1800000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-guangzhou.aliyuncs.com
+      keyid: LTAI5tRh2goyir4HF6r1LWd6
+      keysecret: cNSMl6rlpFMI5OmCQP6QWwWGrF6vH8
+      bucketname: my-cloud-drive
