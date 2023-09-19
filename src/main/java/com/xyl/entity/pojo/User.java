@@ -19,6 +19,10 @@ public class User {
     @ApiModelProperty("用户表主键")
     private Integer id;
 
+    @TableField("uid")
+    @ApiModelProperty("用户id")
+    private String uid;
+
     @TableField("nickname")
     @ApiModelProperty("用户昵称")
     @NotNull
