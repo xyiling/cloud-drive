@@ -25,7 +25,9 @@ public class UserController {
 
     @PostMapping("list")
     @ApiOperation("用戶数据表-获取用户数据")
-    public Result<List<UserResultDto>> getUserList(@RequestBody UserGetDto dto) {
+    public Result<List<UserResultDto>> getList(@RequestBody UserGetDto dto) {
+        // 到这个获取所有用户的接口，其实就有了查找条件的设置，而这牵扯到了用户数据表的设置
+//        userService.getUserList()
         return null;
     }
 
