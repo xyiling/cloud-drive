@@ -4,7 +4,7 @@ import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
 
-public interface IUserService {
+public interface UserService {
     boolean deleteById(UserGetDto dto);
 
     boolean addOrUpdate(UserGetDto dto);

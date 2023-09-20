@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.TreeNode;
 import com.xyl.entity.pojo.UserDir;
-import com.xyl.service.IFileService;
-import com.xyl.service.IUserDirService;
+import com.xyl.service.FileService;
+import com.xyl.service.UserDirService;
 import com.xyl.entity.dto.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,10 +32,10 @@ import java.util.List;
 public class FileController {
 
     @Autowired
-    private IFileService fileService;
+    private FileService fileService;
 
     @Autowired
-    private IUserDirService userDirService;
+    private UserDirService userDirService;
 
     //根据名字模糊查询文件
     @ApiOperation(value = "根据名字模糊查询文件")

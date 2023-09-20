@@ -4,14 +4,13 @@ import com.alibaba.fastjson.JSONException;
 import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import com.github.qcloudsms.httpclient.HTTPException;
-import com.xyl.service.IFileService;
-import com.xyl.service.IMsgService;
+import com.xyl.service.MsgService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class MsgServiceImpl implements IMsgService {
+public class MsgServiceImpl implements MsgService {
     public boolean send(String code, String phone) {
         // 需要发送短信的手机号码
         String[] phoneNumbers = {phone};

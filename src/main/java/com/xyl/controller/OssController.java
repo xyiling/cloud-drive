@@ -5,46 +5,49 @@ import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
-import com.aliyuncs.vod.model.v20170321.*;
+import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
+import com.aliyuncs.vod.model.v20170321.GetPlayInfoRequest;
+import com.aliyuncs.vod.model.v20170321.GetPlayInfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xyl.entity.dto.Result;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.User;
-import com.xyl.util.handler.SpaceException;
-import com.xyl.service.IFileService;
-import com.xyl.service.IUserService;
+import com.xyl.service.FileService;
 import com.xyl.service.OssService;
-import com.xyl.entity.constants.OssConstants;
-import com.xyl.entity.dto.Result;
+import com.xyl.service.UserService;
+import com.xyl.util.handler.SpaceException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.xyl.util.InitVodClient.initVodClient;
 
 
 @RestController
-@RequestMapping("/eduoss/fileoss")
+@RequestMapping("/cloud-drive/oss")
 @CrossOrigin
-//@CrossOrigin
 public class OssController {
+    
     @Autowired
     private OssService ossService;
     @Autowired
-    private IFileService fileService;
-
+    private FileService fileService;
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     //上传头像
     @ApiOperation(value = "根据用户id上传头像")
-    @PostMapping("uploadFileAvatar")
+    @PostMapping("updateAvatar")
     public Result uploadOssFile(MultipartFile file) {
         //获取上传文件  MultipartFile
         //返回上传到oss的路径
-        String url = ossService.uploadFileAvatar(file);
+        String url = ossService.uploadAvatar(file);
         return Result.ok(url, "上传成功");
     }
 
@@ -87,14 +90,13 @@ public class OssController {
                 file1.setFDir(catalogue);
                 String videoId = ossService.uploadFile(file);
                 file1.setVideoId(videoId);
-                return Result.ok().data("file", file1);
+                return Result.ok(file1, "操作成功");
             } else {
                 File file1 = ossService.upload(file, catalogue);
-
-                if (file1.equals("")) {
-                    return Result.error();
+                if ("".equals(file1)) {
+                    return Result.fail("操作失败");
                 }
-                return Result.ok().data("file", file1);
+                return Result.ok(file1, "操作成功");
             }
         } else {
             throw new SpaceException(20001, "内存溢出");
@@ -141,14 +143,14 @@ public class OssController {
         if (flag) {
             return Result.ok();
         } else {
-            return Result.error();
+            return Result.fail();
         }
     }
 
     public static String video(String videoId) {
         try {
             //初始化对象
-            DefaultAcsClient client = initVodClient(ConstanPropertiesUtils.ACCESS_KEY_ID, ConstanPropertiesUtils.ACCESS_KEY_SECRET);
+            DefaultAcsClient client = initVodClient(OssConstants.ACCESS_KEY_ID, OssConstants.ACCESS_KEY_SECRET);
             //创建删除视频request对象
             DeleteVideoRequest request = new DeleteVideoRequest();
             //向request设置视频id

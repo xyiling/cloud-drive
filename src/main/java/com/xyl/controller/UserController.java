@@ -6,7 +6,7 @@ import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.dto.response.UserResultDto;
 import com.xyl.entity.pojo.User;
-import com.xyl.service.IUserService;
+import com.xyl.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private IUserService userService;
+    private UserService userService;
 
     @PostMapping("list")
     @ApiOperation("用戶数据表-获取用户数据")

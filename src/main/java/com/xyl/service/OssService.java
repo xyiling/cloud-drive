@@ -12,5 +12,5 @@ public interface OssService {
 
     String deleteVideo(String id);
 
-    String uploadFileAvatar(MultipartFile file);
+    String uploadAvatar(MultipartFile file);
 }

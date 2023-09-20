@@ -10,11 +10,11 @@ public class Result<T> {
     private String msg;
     private T data;
 
-    public static Result ok(String msg) {
+    public static Result ok(Object data) {
         Result result = new Result<>();
         result.setCode(ResultCode.OK);
         result.setData(null);
-        result.setMsg(msg);
+        result.setMsg("成功");
         return result;
     }
 
@@ -35,6 +35,6 @@ public class Result<T> {
     }
 
     public static Result JudgeBooleanValue(Boolean flag) {
-        return flag ? Result.ok("操作成功") : Result.fail("操作失败");
+        return flag ? Result.ok(null) : Result.fail("操作失败");
     }
 }

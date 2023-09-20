@@ -8,8 +8,8 @@ import com.xyl.entity.dto.Result;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.TreeNode;
 import com.xyl.entity.pojo.UserDir;
-import com.xyl.service.IFileService;
-import com.xyl.service.IUserDirService;
+import com.xyl.service.FileService;
+import com.xyl.service.UserDirService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +21,9 @@ import java.util.List;
 @CrossOrigin
 public class UserDirController {
     @Autowired
-    private IUserDirService userDirService;
+    private UserDirService userDirService;
     @Autowired
-    private IFileService fileService;
+    private FileService fileService;
 
     int result=1;
 

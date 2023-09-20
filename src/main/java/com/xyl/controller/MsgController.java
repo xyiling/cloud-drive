@@ -1,7 +1,7 @@
 package com.xyl.controller;
 
 import com.xyl.entity.dto.Result;
-import com.xyl.service.IMsgService;
+import com.xyl.service.MsgService;
 import com.xyl.util.RandomUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,10 +17,10 @@ import java.util.concurrent.TimeUnit;
 @CrossOrigin
 public class MsgController {
 
-    private final IMsgService msgService;
+    private final MsgService msgService;
     private final RedisTemplate<String, String> redisTemplate;
 
-    public MsgController(IMsgService msgService, RedisTemplate<String, String> redisTemplate) {
+    public MsgController(MsgService msgService, RedisTemplate<String, String> redisTemplate) {
         this.msgService = msgService;
         this.redisTemplate = redisTemplate;
     }

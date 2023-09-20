@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xyl.entity.dao.UserDirMapper;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.UserDir;
-import com.xyl.service.IFileService;
-import com.xyl.service.IUserDirService;
+import com.xyl.service.FileService;
+import com.xyl.service.UserDirService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDirServiceImpl implements IUserDirService {
+public class UserDirServiceImpl implements UserDirService {
 
     @Autowired
-    private IFileService fileService;
+    private FileService fileService;
     @Autowired
     private UserDirMapper userDirMapper;
 

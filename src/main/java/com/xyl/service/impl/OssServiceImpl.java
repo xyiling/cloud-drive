@@ -1,35 +1,45 @@
 package com.xyl.service.impl;
 
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.vod.upload.impl.UploadVideoImpl;
+import com.aliyun.vod.upload.req.UploadStreamRequest;
+import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xyl.entity.constants.OssConstants;
 import com.xyl.entity.pojo.File;
+import com.xyl.service.FileService;
 import com.xyl.service.OssService;
+import com.xyl.service.UserService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class OssServiceImpl implements OssService {
 
     @Autowired
     private OSS ossClient;// 注入阿里云oss文件服务器客户端
-//    @Autowired
-//    private AliyunOssConfig aliyunOssConfig;// 注入阿里云OSS基本配置类
 
     @Autowired
     private FileService fileService;
 
     @Autowired
-    private UcenterMemberService memberService;
-
+    private UserService userService;
+    // 工具类获取值
+    private final String endpoint = OssConstants.END_POINT;
+    private final String accessKeyId = OssConstants.ACCESS_KEY_ID;
+    private final String accessKeySecret = OssConstants.ACCESS_KEY_SECRET;
+    private final String bucketName = OssConstants.BUCKET_NAME;
     //上传头像到oss
     @Override
     public File upload(MultipartFile file, String catalogue) {
-        // 工具类获取值
-        String endpoint = ConstanPropertiesUtils.END_POIND;
-        String accessKeyId = ConstanPropertiesUtils.ACCESS_KEY_ID;
-        String accessKeySecret = ConstanPropertiesUtils.ACCESS_KEY_SECRET;
-        String bucketName = ConstanPropertiesUtils.BUCKET_NAME;
 
         try {
             // 创建OSS实例。
@@ -85,20 +95,12 @@ public class OssServiceImpl implements OssService {
 
     /*
      * 文件删除
-     * @param: objectName
-     * @return: java.lang.String
-     * @create: 2020/10/31 16:50
-     * @author: csp1999
      */
     public String delete(String id) {
-        String endpoint = ConstanPropertiesUtils.END_POIND;
-        String accessKeyId = ConstanPropertiesUtils.ACCESS_KEY_ID;
-        String accessKeySecret = ConstanPropertiesUtils.ACCESS_KEY_SECRET;
-        String bucketName = ConstanPropertiesUtils.BUCKET_NAME;
         // 日期目录
         // 注意，这里虽然写成这种固定获取日期目录的形式，逻辑上确实存在问题，但是实际上，filePath的日期目录应该是从数据库查询的
-        QueryWrapper<File> wrapper=new QueryWrapper<>();
-        wrapper.eq("id",id);
+        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(File::getId, id);
         File fileServiceOne = fileService.getOne(wrapper);
         String name = fileServiceOne.getName();
         //System.out.println(fileServiceOne);
@@ -140,7 +142,7 @@ public class OssServiceImpl implements OssService {
     }
 
     @Override
-    public String uploadfile(MultipartFile file) {
+    public String uploadFile(MultipartFile file) {
         try {
             //accessKeyId, accessKeySecret
             //fileName：上传文件原始名称
@@ -150,7 +152,7 @@ public class OssServiceImpl implements OssService {
             String title = fileName.substring(0, fileName.lastIndexOf("."));
             //inputStream：上传文件输入流
             InputStream inputStream = file.getInputStream();
-            UploadStreamRequest request = new UploadStreamRequest(ConstanPropertiesUtils.ACCESS_KEY_ID, ConstanPropertiesUtils.ACCESS_KEY_SECRET, title, fileName, inputStream);
+            UploadStreamRequest request = new UploadStreamRequest(OssConstants.ACCESS_KEY_ID, OssConstants.ACCESS_KEY_SECRET, title, fileName, inputStream);
 
             UploadVideoImpl uploader = new UploadVideoImpl();
             UploadStreamResponse response = uploader.uploadStream(request);
@@ -172,32 +174,28 @@ public class OssServiceImpl implements OssService {
 
     @Override
     public String deleteVideo(String id) {
-        QueryWrapper<File> wrapper=new QueryWrapper<>();
-        wrapper.eq("id",id);
+        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(File::getId, id);
         File file = fileService.getOne(wrapper);
         boolean b = fileService.remove(wrapper);
-        System.out.println(file);
         return file.getVideoId();
     }
 
     @Override
-    public String uploadFileAvatar(MultipartFile file) {
+    public String uploadAvatar(MultipartFile file) {
         // 工具类获取值
-        String endpoint = ConstanPropertiesUtils.END_POIND;
-        String accessKeyId = ConstanPropertiesUtils.ACCESS_KEY_ID;
-        String accessKeySecret = ConstanPropertiesUtils.ACCESS_KEY_SECRET;
-        String bucketName = ConstanPropertiesUtils.BUCKET_NAME;
+        String endpoint = OssConstants.END_POINT;
+        String accessKeyId = OssConstants.ACCESS_KEY_ID;
+        String accessKeySecret = OssConstants.ACCESS_KEY_SECRET;
+        String bucketName = OssConstants.BUCKET_NAME;
 
         try {
             // 创建OSS实例。
             OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-
             //获取上传文件输入流
             InputStream inputStream = file.getInputStream();
             //获取文件名称
             String fileName = file.getOriginalFilename();
-
-
             //2 把文件按照日期进行分类
             //获取当前日期
             //   2019/11/12

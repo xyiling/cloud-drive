@@ -4,7 +4,7 @@ import com.xyl.entity.pojo.File;
 
 import java.util.List;
 
-public interface IFileService {
+public interface FileService {
     List<File> getAllFileInfo(String memId);
 
     List<File> getFileInfo(String id);

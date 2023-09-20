@@ -5,7 +5,7 @@ import com.xyl.entity.dao.UserMapper;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
-import com.xyl.service.IUserService;
+import com.xyl.service.UserService;
 import com.xyl.util.JwtUtil;
 import com.xyl.util.MD5;
 import com.xyl.util.converter.UserConverter;
@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -137,7 +137,7 @@ public class UserServiceImpl implements IUserService {
 
 
         //判断手机号是否重复，表里面存在相同手机号不进行添加
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq("mobile", mobile);
         Integer count = baseMapper.selectCount(wrapper);
         if (count > 0) {
