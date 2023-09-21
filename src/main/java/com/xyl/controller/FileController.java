@@ -52,6 +52,7 @@ public class FileController {
     @PostMapping("addOrUpdate")
     public Result<Boolean> addOrUpdate(@Validated @RequestBody FileGetDto dto) {
         // todo 文件收藏功能、文件重命名功能等文件信息更新功能、文件上传功能
+        // 上传文件需要指定文件类型，文件类型不同，应该有不同的默认路径
         return fileService.addOrUpdate(dto);
     }
 

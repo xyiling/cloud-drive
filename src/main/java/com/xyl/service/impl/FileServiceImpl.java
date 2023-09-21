@@ -78,6 +78,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public Result<Boolean> addOrUpdate(FileGetDto dto) {
+        // todo 在这里调用AliyunOss提供的服务，而不是再创建一个OssController，多余
         return null;
     }
 
