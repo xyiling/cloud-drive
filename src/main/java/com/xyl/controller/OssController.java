@@ -9,7 +9,6 @@ import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.GetPlayInfoRequest;
 import com.aliyuncs.vod.model.v20170321.GetPlayInfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.xyl.entity.dto.Result;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.User;
 import com.xyl.service.FileService;

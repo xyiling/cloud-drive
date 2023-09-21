@@ -4,7 +4,6 @@ package com.xyl.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.xyl.entity.dto.Result;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.TreeNode;
 import com.xyl.entity.pojo.UserDir;

@@ -3,6 +3,8 @@ package com.xyl.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xyl.entity.dao.FileMapper;
+import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.FileGetDto;
 import com.xyl.entity.pojo.File;
 import com.xyl.service.FileService;
 import org.springframework.stereotype.Service;
@@ -68,5 +70,16 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             file.setFDir(sb.toString());
         }
         return fileList;
+    }
+
+    @Override
+    public Result<Boolean> addOrUpdate(FileGetDto dto) {
+
+        return null;
+    }
+
+    @Override
+    public Result<List<File>> getFileList(FileGetDto dto) {
+        return null;
     }
 }

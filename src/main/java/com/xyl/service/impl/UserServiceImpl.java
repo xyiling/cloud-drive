@@ -2,6 +2,7 @@ package com.xyl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xyl.entity.dao.UserMapper;
+import com.xyl.entity.dto.Result;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
@@ -114,7 +115,7 @@ public class UserServiceImpl implements UserService {
     }
 
     //注册的方法
-    public void register(RegisterVo registerVo) {
+    public Result register(RegisterVo registerVo) {
         //获取注册的数据
         String code = registerVo.getCode(); //验证码
         String mobile = registerVo.getMobile(); //手机号
@@ -150,14 +151,7 @@ public class UserServiceImpl implements UserService {
         user.setAvatar(avatar);
         user.setPassword(MD5.encrypt(password));//密码需要加密的
         baseMapper.insert(user);
+        return null;
     }
-
-//    @Override
-//    public boolean updateuser(User User) {
-//        String mobile = User.getMobile(); //手机号
-//        String nickname = User.getNickname(); //昵称
-//        String password = User.getPassword(); //密码
-//        String avatar=User.getAvatar();//头像
-//    }
 
 }

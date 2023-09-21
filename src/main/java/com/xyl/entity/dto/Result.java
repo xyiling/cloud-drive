@@ -1,40 +1,22 @@
 package com.xyl.entity.dto;
 
-import com.xyl.entity.constants.ResultCode;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import com.xyl.entity.constants.ResultCode;
+
+import java.io.Serializable;
 
 @Data
-public class Result<T> {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Result<T> implements Serializable {
 
-    private Integer code;
-    private String msg;
+    private boolean success;
+    private Object message;
     private T data;
+    private int code;
 
-    public static Result ok(Object data) {
-        Result result = new Result<>();
-        result.setCode(ResultCode.OK);
-        result.setData(null);
-        result.setMsg("成功");
-        return result;
-    }
-
-    public static Result ok(Object data, String msg) {
-        Result result = new Result<>();
-        result.setCode(ResultCode.OK);
-        result.setData(data);
-        result.setMsg(msg);
-        return result;
-    }
-
-    public static Result fail(String msg) {
-        Result result = new Result<>();
-        result.setCode(ResultCode.FAIL);
-        result.setData(null);
-        result.setMsg(msg);
-        return result;
-    }
-
-    public static Result JudgeBooleanValue(Boolean flag) {
-        return flag ? Result.ok(null) : Result.fail("操作失败");
-    }
 }
+

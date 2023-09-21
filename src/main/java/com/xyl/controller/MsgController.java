@@ -1,6 +1,5 @@
 package com.xyl.controller;
 
-import com.xyl.entity.dto.Result;
 import com.xyl.service.MsgService;
 import com.xyl.util.RandomUtil;
 import io.swagger.annotations.Api;

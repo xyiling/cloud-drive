@@ -1,5 +1,6 @@
 package com.xyl.service;
 
+import com.xyl.entity.dto.Result;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
@@ -13,6 +14,6 @@ public interface UserService {
 
     User login1(UserGetDto dto);
     //注册的方法
-    void register(RegisterVo registerVo);
-    User getUserById(String userId);
+    Result<Boolean> register(RegisterVo registerVo);
+    Result getUserById(UserGetDto userId);
 }
