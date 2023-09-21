@@ -1,6 +1,7 @@
 package com.xyl.controller;
 
 import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.CommonIdDto;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.dto.response.UserResultDto;
@@ -17,6 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author xyl
+ * 用户管理：
+ * <ul>
+ *     <li>用户登录</li>
+ *     <li>用户注册</li>
+ *     <li>用户退出</li>
+ *     <li>用户注销</li>
+ *     <li>密码重置</li>
+ *     <li>用户查询</li>
+ *     <li>用户信息新增、更新与删除</li>
+ * </ul>
+ */
 @RestController
 @Api("用户表-用户管理")
 @RequestMapping("/cloud-drive/user/")
@@ -28,7 +42,6 @@ public class UserController {
     @PostMapping("list")
     @ApiOperation("用戶数据表-获取用户数据")
     public Result<List<UserResultDto>> getList(@Validated @RequestBody UserGetDto dto) {
-        // 到这个获取所有用户的接口，其实就有了查找条件的设置，而这牵扯到了用户数据表的设置
 //        userService.getUserList()
         return null;
     }
@@ -39,35 +52,41 @@ public class UserController {
         return ResultUtil.judgeBooleanValue(userService.addOrUpdate(dto));
     }
 
-    //登录
+    /**
+     * 用户登录
+     * 计划使用 spring security
+     */
     @ApiOperation(value = "用户-登录")
     @PostMapping("login")
     public Result login(@Validated @RequestBody UserGetDto dto) {
-        //user对象封装手机号和密码
-        //调用service方法实现登录
-        //返回token值，使用jwt生成
-//        String token = userService.login(dto);
-//        User user = userService.login1(dto);
-//        return Result.ok(token).data("token", token).data("mem", mem);
         return null;
     }
 
+    /**
+     * 用户退出操作
+     * spring security
+     */
     @ApiOperation("用户-下线")
     @PostMapping("logout")
     public Result<Boolean> logout(@Validated @RequestBody UserGetDto dto) {
         return null;
     }
-    //注册
+
+    /**
+     * 注册
+     */
     @ApiOperation("用户-注册")
     @PostMapping("register")
     public Result<Boolean> register(@Validated @RequestBody RegisterVo registerVo) {
         return userService.register(registerVo);
     }
 
-    //查询用户信息
+    /**
+     * 查询用户信息
+     */
     @ApiOperation(value = "用户-根据id查询用户")
     @PostMapping("getById")
-    public Result getById(@Validated @RequestBody UserGetDto dto) {
+    public Result getById(@Validated @RequestBody CommonIdDto dto) {
         return userService.getUserById(dto);
     }
 

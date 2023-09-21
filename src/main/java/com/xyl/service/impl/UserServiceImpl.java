@@ -3,6 +3,7 @@ package com.xyl.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.xyl.entity.dao.UserMapper;
 import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.CommonIdDto;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
@@ -25,9 +26,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserConverter userConverter;
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
-
     @Override
     public Result<Boolean> deleteById(UserGetDto dto) {
         return ResultUtil.judgeBooleanValue(userMapper.deleteById(dto.getId()) > 0);
@@ -46,18 +44,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(UserGetDto dto) {
-        return null;
-    }
-
-    @Override
-    public User login1(UserGetDto dto) {
+    public Result<Boolean> register(RegisterVo registerVo) {
         return null;
     }
 
 
     @Override
-    public Result getUserById(UserGetDto userId) {
+    public Result getUserById(CommonIdDto userId) {
         return null;
     }
 
