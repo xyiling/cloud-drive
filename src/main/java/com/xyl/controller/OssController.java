@@ -9,11 +9,13 @@ import com.aliyuncs.vod.model.v20170321.DeleteVideoRequest;
 import com.aliyuncs.vod.model.v20170321.GetPlayInfoRequest;
 import com.aliyuncs.vod.model.v20170321.GetPlayInfoResponse;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.xyl.entity.dto.Result;
 import com.xyl.entity.pojo.File;
 import com.xyl.entity.pojo.User;
 import com.xyl.service.FileService;
 import com.xyl.service.OssService;
 import com.xyl.service.UserService;
+import com.xyl.util.ResultUtil;
 import com.xyl.util.handler.SpaceException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,18 +43,18 @@ public class OssController {
     private UserService userService;
 
     //上传头像
-    @ApiOperation(value = "根据用户id上传头像")
+    @ApiOperation(value = "云存储-头像上传")
     @PostMapping("updateAvatar")
     public Result uploadOssFile(MultipartFile file) {
         //获取上传文件  MultipartFile
         //返回上传到oss的路径
         String url = ossService.uploadAvatar(file);
-        return Result.ok(url, "上传成功");
+        return Result.ok(url);
     }
 
     //判断上传的文件类型
     @ApiOperation(value = "上传文件")
-    @PostMapping("upload/{userId}")
+    @PostMapping("upload")
     public Result upload(MultipartFile file, @RequestParam String catalogue, @PathVariable String userId) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getId, userId);
@@ -132,18 +134,10 @@ public class OssController {
             } else {
                 //System.out.println("晚间222222");
                 String status = ossService.delete(idList[i]);
-                if (status.equals("error")) {
-                    flag = false;
-                } else {
-                    flag = true;
-                }
+                flag = !status.equals("error");
             }
         }
-        if (flag) {
-            return Result.ok();
-        } else {
-            return Result.fail();
-        }
+        return ResultUtil.judgeBooleanValue(flag);
     }
 
     public static String video(String videoId) {
@@ -164,12 +158,9 @@ public class OssController {
     }
 
     //根据视频id获取视频凭证
-    @ApiOperation(value = "根据视频vodioId获取播放地址")
+    @ApiOperation(value = "根据视频videoId获取播放地址")
     @PostMapping("getPlayAuth")
     public Result getPlayAuth(@RequestParam("isList") List<String> isList) {
-
-        //List<String>isList =Arrays.asList(list);
-        System.out.println(isList);
 
         ArrayList urlList = new ArrayList();
         File file = new File();
@@ -183,26 +174,17 @@ public class OssController {
         // 视频ID。
         for (int i = 0; i < isList.size(); i++) {
             Map<String, Object> map = new HashMap<String, Object>();
-            // System.out.println(isList.get(i));
             file.setVideoId(isList.get(i));
             map.put("videoId", isList.get(i));
             request.setVideoId(isList.get(i));
-            // request.setVideoId(id);
             try {
                 GetPlayInfoResponse response = client.getAcsResponse(request);
-                // System.out.println(response.getPlayInfoList().get(3));
-//                response.getPlayInfoList().
-                //response.getVideoBase().getCoverURL();
-                //System.out.println(new Gson().toJson(response));
                 for (GetPlayInfoResponse.PlayInfo playInfo : response.getPlayInfoList()) {
                     // 播放地址
                     System.out.println("PlayInfo.PlayURL = " + playInfo.getPlayURL());
                     file.setUrl(playInfo.getPlayURL());
                     map.put("url", playInfo.getPlayURL());
                     urlList.add(map);
-                    System.out.println(urlList);
-                    //System.out.println(map);
-                    //urlList.add(playInfo.getPlayURL());
                     request.setVideoId(null);
                 }
             } catch (ServerException e) {
@@ -212,12 +194,8 @@ public class OssController {
                 System.out.println("ErrMsg:" + e.getErrMsg());
                 System.out.println("RequestId:" + e.getRequestId());
             }
-            //urlList.add(map);
-            //map.clear();
-            //list.add(file);
-            //System.out.println(urlList);
         }
-        return Result.ok().data("urlList", urlList);
+        return ResultUtil.ok(urlList);
     }
 
 

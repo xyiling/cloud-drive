@@ -4,14 +4,16 @@ import com.xyl.entity.dto.Result;
 import com.xyl.entity.dto.request.RegisterVo;
 import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.dto.response.UserResultDto;
-import com.xyl.entity.pojo.User;
 import com.xyl.service.UserService;
 import com.xyl.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -34,8 +36,7 @@ public class UserController {
     @PostMapping("addOrUpdate")
     @ApiOperation("用戶数据表-新增或更新用户数据")
     public Result<Boolean> addOrUpdate(@Validated @RequestBody UserGetDto dto) {
-        boolean flag = userService.addOrUpdate(dto);
-        return ResultUtil.judgeBooleanValue(flag);
+        return ResultUtil.judgeBooleanValue(userService.addOrUpdate(dto));
     }
 
     //登录
@@ -51,6 +52,11 @@ public class UserController {
         return null;
     }
 
+    @ApiOperation("用户-下线")
+    @PostMapping("logout")
+    public Result<Boolean> logout(@Validated @RequestBody UserGetDto dto) {
+        return null;
+    }
     //注册
     @ApiOperation("用户-注册")
     @PostMapping("register")
@@ -60,8 +66,14 @@ public class UserController {
 
     //查询用户信息
     @ApiOperation(value = "用户-根据id查询用户")
-    @GetMapping("getById")
+    @PostMapping("getById")
     public Result getById(@Validated @RequestBody UserGetDto dto) {
         return userService.getUserById(dto);
+    }
+
+    @ApiOperation("用户-注销")
+    @PostMapping("deleteById")
+    public Result<Boolean> deleteById(@Validated @RequestBody UserGetDto dto) {
+        return userService.deleteById(dto);
     }
 }

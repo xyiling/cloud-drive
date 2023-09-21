@@ -6,7 +6,7 @@ import com.xyl.entity.dto.request.UserGetDto;
 import com.xyl.entity.pojo.User;
 
 public interface UserService {
-    boolean deleteById(UserGetDto dto);
+    Result<Boolean> deleteById(UserGetDto dto);
 
     boolean addOrUpdate(UserGetDto dto);
     //登录的方法
