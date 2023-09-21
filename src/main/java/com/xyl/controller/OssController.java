@@ -121,7 +121,7 @@ public class OssController {
             long result = one.getNeicun() - file.getSize();
             User user = new User();
             user.setId(userId);
-            user.setNeicun(result);
+            user.getStorageSize(result);
             userService.updateById(user);
             //System.out.println(file);
             if (file.getFiletype().equals("video") || file.getFiletype().equals("audio")) {
@@ -132,7 +132,6 @@ public class OssController {
                     flag = true;
                 }
             } else {
-                //System.out.println("晚间222222");
                 String status = ossService.delete(idList[i]);
                 flag = !status.equals("error");
             }

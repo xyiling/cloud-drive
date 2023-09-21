@@ -4,27 +4,31 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xyl.entity.dao.FileMapper;
 import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.CommonIdDto;
 import com.xyl.entity.dto.request.FileGetDto;
 import com.xyl.entity.pojo.File;
 import com.xyl.service.FileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements FileService {
+public class FileServiceImpl implements FileService {
+    @Autowired
+    private FileMapper fileMapper;
     @Override
     public List<File> getAllFileInfo(String memId) {
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getMemId, memId);
-        return baseMapper.selectList(wrapper);
+        return fileMapper.selectList(wrapper);
     }
 
     @Override
     public  List<File> getFileInfo(String id) {
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getId, id);
-        return baseMapper.selectList(wrapper);
+        return fileMapper.selectList(wrapper);
     }
 
     /**
@@ -35,14 +39,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getFDir, dir);
         wrapper.eq(File::getMemId, id);
-        return baseMapper.selectList(wrapper);
+        return fileMapper.selectList(wrapper);
     }
 
     @Override
     public File getFiles(String id) {
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getId, id);
-        return baseMapper.selectOne(wrapper);
+        return fileMapper.selectOne(wrapper);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getMemId, memid);
         wrapper.like(File::getName, name);
-        return baseMapper.selectList(wrapper);
+        return fileMapper.selectList(wrapper);
     }
 
     @Override
@@ -58,7 +62,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(File::getMemId,userId);
         wrapper.like(File::getUrl,url);
-        List<File> fileList = baseMapper.selectList(wrapper);
+        List<File> fileList = fileMapper.selectList(wrapper);
         for (File file : fileList) {
             String fDir = file.getFDir();
             String[] s = fDir.split("/", -1);
@@ -74,12 +78,16 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     @Override
     public Result<Boolean> addOrUpdate(FileGetDto dto) {
-
         return null;
     }
 
     @Override
     public Result<List<File>> getFileList(FileGetDto dto) {
+        return null;
+    }
+
+    @Override
+    public Boolean deleteById(CommonIdDto dto) {
         return null;
     }
 }

@@ -38,7 +38,7 @@ public class User implements Serializable {
     private String avatar;
 
     @ApiModelProperty(value = "内存")
-    private long memory;
+    private long storageSize;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)

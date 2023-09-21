@@ -1,6 +1,7 @@
 package com.xyl.controller;
 
 import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.CommonIdDto;
 import com.xyl.entity.dto.request.FileGetDto;
 import com.xyl.entity.pojo.File;
 import com.xyl.service.FileService;
@@ -54,6 +55,10 @@ public class FileController {
         return fileService.addOrUpdate(dto);
     }
 
-
     // todo 文件删除
+    @ApiOperation("文件-删除文件")
+    @PostMapping("deleteById")
+    public Result<Boolean> deleteById(@Validated @RequestBody CommonIdDto dto) {
+        return ResultUtil.judgeBooleanValue(fileService.deleteById(dto));
+    }
 }

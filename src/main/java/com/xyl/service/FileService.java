@@ -1,6 +1,7 @@
 package com.xyl.service;
 
 import com.xyl.entity.dto.Result;
+import com.xyl.entity.dto.request.CommonIdDto;
 import com.xyl.entity.dto.request.FileGetDto;
 import com.xyl.entity.pojo.File;
 
@@ -22,4 +23,6 @@ public interface FileService {
     Result<Boolean> addOrUpdate(FileGetDto dto);
 
     Result<List<File>> getFileList(FileGetDto dto);
+
+    Boolean deleteById(CommonIdDto dto);
 }
