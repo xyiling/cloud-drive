@@ -2,6 +2,7 @@ package com.xyl.entity.constants;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClient;
+import com.aliyun.oss.OSSClientBuilder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -38,7 +39,7 @@ public class OssConstants implements InitializingBean {
     }
     // 将OSS 客户端交给Spring容器托管
     @Bean
-    public OSS OSSClient() {
-        return new OSSClient(endpoint, keyId, keySecret);
+    public OSS ossClient() {
+        return new OSSClientBuilder().build(endpoint, keyId, keySecret);
     }
 }

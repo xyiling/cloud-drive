@@ -37,26 +37,25 @@ public class OssServiceImpl implements OssService {
     private final String accessKeyId = OssConstants.ACCESS_KEY_ID;
     private final String accessKeySecret = OssConstants.ACCESS_KEY_SECRET;
     private final String bucketName = OssConstants.BUCKET_NAME;
+
     //上传头像到oss
     @Override
     public File upload(MultipartFile file, String catalogue) {
 
         try {
-            // 创建OSS实例。
-            OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
-            File file1=new File();
+            File file1 = new File();
             //获取上传文件输入流
             InputStream inputStream = file.getInputStream();
             //获取文件名称
             String originalFilename = file.getOriginalFilename();
             //获取文件类型
             String fileType = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String name=originalFilename.substring(0, originalFilename.indexOf("."));
+            String name = originalFilename.substring(0, originalFilename.indexOf("."));
             String type = fileType.substring(1);
-            if(type.equals("bmp")||type.equals("mp3")||type.equals("jpg")||type.equals("jpeg")||type.equals("png")||type.equals("mp3")||type.equals("tif")||type.equals("gif")
-                    ||type.equals("pcx")||type.equals("tga")||type.equals("exif")||type.equals("fpx")||type.equals("svg")||type.equals("psd")||type.equals("cdr")
-                    ||type.equals("pcd")||type.equals("dxf")||type.equals("ufo")||type.equals("eps")||type.equals("ai")||type.equals("raw")
-                    ||type.equals("WMF")||type.equals("webp")||type.equals("mp3")||type.equals("avif")){
+            if (type.equals("bmp") || type.equals("jpg") || type.equals("jpeg") || type.equals("png") || type.equals("tif") || type.equals("gif")
+                    || type.equals("pcx") || type.equals("tga") || type.equals("exif") || type.equals("fpx") || type.equals("svg") || type.equals("psd") || type.equals("cdr")
+                    || type.equals("dxf") || type.equals("ufo") || type.equals("eps")  || type.equals("raw")
+                    || type.equals("WMF") || type.equals("webp")) {
                 file1.setFiletype("image");
             }
 
@@ -105,10 +104,9 @@ public class OssServiceImpl implements OssService {
         String name = fileServiceOne.getName();
         //System.out.println(fileServiceOne);
         boolean remove = fileService.remove(wrapper);
-        if (remove==true){
+        if (remove == true) {
             System.out.println("删除成功");
-        }
-        else{
+        } else {
             System.out.println("删除失败");
         }
         SimpleDateFormat data = new SimpleDateFormat("yyyy/MM/dd");
@@ -127,7 +125,7 @@ public class OssServiceImpl implements OssService {
                     accessKeyId, accessKeySecret);
             // 根据BucketName,filetName删除文件
             // 删除目录中的文件，如果是最后一个文件fileoath目录会被删除。
-            String fileKey =filePath + "/" + name;
+            String fileKey = filePath + "/" + name;
             ossClient.deleteObject(bucketName, fileKey);
             try {
             } finally {

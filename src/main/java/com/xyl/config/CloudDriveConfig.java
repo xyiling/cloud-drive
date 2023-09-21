@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MapperScan("com.xyl.service.mapper")
 public class CloudDriveConfig {
+
     /**
      * 逻辑删除插件
      */

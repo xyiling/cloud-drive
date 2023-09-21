@@ -59,12 +59,12 @@ public class OssController {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getId, userId);
         User one = userService.getUserById(wrapper);
-        long neicun = one.getMemory();
+        long neicun = one.getStorageSize();
         long size = file.getSize();
         long result = neicun + size;
         if (result < 1073741824) {
             User user = new User();
-            user.setMemory(result);
+            user.setStorageSize(result);
             user.setId(userId);
             boolean b = userService.updateById(user);
             System.out.println(b);
