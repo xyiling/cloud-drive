@@ -17,45 +17,6 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileMapper fileMapper;
-    @Override
-    public List<File> getAllFileInfo(String memId) {
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getMemId, memId);
-        return fileMapper.selectList(wrapper);
-    }
-
-    @Override
-    public  List<File> getFileInfo(String id) {
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getId, id);
-        return fileMapper.selectList(wrapper);
-    }
-
-    /**
-     * 获取当前目录下的所有文件
-     */
-    @Override
-    public List<File> getCurFiles(String dir,String id) {
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getFDir, dir);
-        wrapper.eq(File::getMemId, id);
-        return fileMapper.selectList(wrapper);
-    }
-
-    @Override
-    public File getFiles(String id) {
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getId, id);
-        return fileMapper.selectOne(wrapper);
-    }
-
-    @Override
-    public List<File> getFindFile(String memid,String name) {
-        LambdaQueryWrapper<File> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(File::getMemId, memid);
-        wrapper.like(File::getName, name);
-        return fileMapper.selectList(wrapper);
-    }
 
     @Override
     public List<File> getList(String userId, String url,int result,String name) {
